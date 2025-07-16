@@ -1,4 +1,4 @@
-kname: Convert Whitepaper to PDF
+name: Convert Whitepaper to PDF
 
 on:
   push:
