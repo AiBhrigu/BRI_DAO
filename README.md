@@ -1,7 +1,27 @@
-# BRI DAO — Story Machine
+# BRI DAO
 
-**Story Machine** is an open, evolving framework that connects real-world events, financial trends, and geo-cosmic cycles into a unified stream of meaningful scenarios.
-It does not simply predict — it narrates. By analyzing historical patterns and spatial-temporal correlations, it constructs logical paths for future possibilities.
+🚀 **Авто-билд Whitepaper PDF**
 
-This is not a typical forecasting tool. The Story Machine transforms scattered data into structured stories about our economic reality, combining principles of celestial mechanics, market dynamics, and human behavior.
-Every scenario is transparent, verifiable, and extendable — empowering the community to co-create a continuously growing library of stories about time, cycles, and change.
+[![Build Whitepaper PDF](https://github.com/AiBhrigu/BRI_DAO/actions/workflows/whitepaper-pdf.yml/badge.svg)](https://github.com/AiBhrigu/BRI_DAO/actions/workflows/whitepaper-pdf.yml)
+
+Этот репозиторий автоматически конвертирует `.md` версии Whitepaper в `.pdf` при каждом коммите в ветку `main`.  
+Файлы PDF всегда актуальны и лежат в папке [`docs/`](./docs).
+
+---
+
+## 📄 Белая книга
+
+- [Whitepaper (EN)](docs/Whitepaper_EN.pdf)
+- [Whitepaper (RU)](docs/Whitepaper_RU.pdf)
+
+## 📚 Документация и развитие
+
+Всё развитие — публично.  
+Ваши пулреквесты и предложения приветствуются!
+
+---
+
+## 📧 Контакты
+
+Инициатор: Alisher Yulchiev  
+Email: [to-be-added]
