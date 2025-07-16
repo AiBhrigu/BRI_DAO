@@ -41,3 +41,4 @@ Email: [to-be-added]
 ## Notes
 
 All updates will be available in the GitHub repository in real time. Contributions are welcome!
+
