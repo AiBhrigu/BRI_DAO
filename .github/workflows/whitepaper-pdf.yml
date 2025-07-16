@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Pandoc
+      - name: Set up Pandoc and LaTeX
         run: |
           sudo apt-get update
           sudo apt-get install -y pandoc texlive-xetex fonts-dejavu
@@ -23,7 +23,7 @@ jobs:
           pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
           pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
 
-      - name: Commit & Push PDFs back
+      - name: Commit & Push PDFs
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
