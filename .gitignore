@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+dist/
+
+# Rust
+target/
+
+# OS
+.DS_Store
+
+# Others
+*.log
+*.env
