@@ -1,4 +1,4 @@
-# 📜 Whitepaper — BRI DAO: The Story Machine
+# Whitepaper — BRI DAO: The Story Machine
 
 ---
 
