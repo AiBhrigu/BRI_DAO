@@ -1,6 +1,3 @@
 pdf-engine: xelatex
-metadata:
-  title: "BRI DAO — Whitepaper"
-  author: "Alisher Yulchiev"
-  date: ""
-mainfont: "DejaVu Sans"
+variables:
+  mainfont: DejaVu Serif
