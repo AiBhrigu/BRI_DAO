@@ -1,3 +1,12 @@
+- name: Commit & Push PDFs back
+  run: |
+    git config --global user.name "github-actions"
+    git config --global user.email "actions@github.com"
+    git add docs/*.pdf
+    git commit -m "Auto-generate Whitepaper PDFs" || echo "No changes to commit"
+    git push origin main
+  env:
+    GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 name: Convert Whitepaper to PDF
 
 on:
@@ -29,10 +38,13 @@ jobs:
       - name: Convert RU Whitepaper to PDF
         run: pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf --defaults=pandoc.yaml
 
-      - name: Commit and push PDFs
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "actions@github.com"
-          git add docs/*.pdf
-          git commit -m "Auto-generate Whitepaper PDFs"
-          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }} HEAD:main
+      - name: Commit & Push PDFs back
+  run: |
+    git config --global user.name "github-actions"
+    git config --global user.email "actions@github.com"
+    git add docs/*.pdf
+    git commit -m "Auto-generate Whitepaper PDFs" || echo "No changes to commit"
+    git push origin main
+  env:
+    GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
