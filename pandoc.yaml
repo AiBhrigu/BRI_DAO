@@ -1,15 +1,3 @@
-from: markdown
-to: pdf
+kpdf-engine: xelatex
+mainfont: DejaVu Serif
 
-standalone: true
-toc: true
-pdf-engine: xelatex
-
-variables:
-  mainfont: "DejaVu Serif"
-  geometry: margin=2.5cm
-
-metadata:
-  title: "BRI DAO — Whitepaper"
-  author: "Alisher Yulchiev"
-  date: "2025"
