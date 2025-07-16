@@ -31,12 +31,12 @@ This project is distributed under the MIT License.
 
 ## 7. Contact
 
+## 7. Contact
+
 Initiator: Alisher Yulchiev  
 Email: [to-be-added]
 
 ---
-
-\newpage
 
 ## Notes
 
