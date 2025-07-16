@@ -10,3 +10,4 @@ Contact: [your-email@example.com]
 📌 Repo auto-syncs Whitepaper + Roadmap + Changelog.
 
 License: MIT.
+
