@@ -2,7 +2,7 @@
 
 ---
 
-## 🚩 1. Introduction
+## 1. Introduction
 
 **The Story Machine (BRI DAO)** is an open hybrid system for analyzing **celestial mechanics cycles** and **spatial-temporal correlations** of historical events.
 
