@@ -1,3 +1,6 @@
 pdf-engine: xelatex
-variables:
-  mainfont: DejaVu Serif
+metadata:
+  title: "BRI DAO — Whitepaper"
+  author: "Alisher Yulchiev"
+  date: ""
+mainfont: "DejaVu Sans"
