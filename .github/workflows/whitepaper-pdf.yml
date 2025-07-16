@@ -14,26 +14,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Install Pandoc and XeLaTeX
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc texlive-xetex fonts-dejavu
+          sudo apt-get install -y pandoc texlive-xetex
 
       - name: Convert EN Whitepaper to PDF
-        run: |
-          pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf --pdf-engine=xelatex
+        run: pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf
 
       - name: Convert RU Whitepaper to PDF
-        run: |
-          pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf --pdf-engine=xelatex
+        run: pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf
 
-      - name: Commit PDFs
+      - name: Commit and push PDF files with PAT
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
           git add docs/*.pdf
-          git commit -m "Auto-generate Whitepaper PDFs"
-          git push
+          git commit -m "Auto-generate Whitepaper PDFs" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/AiBhrigu/BRI_DAO.git HEAD:main
