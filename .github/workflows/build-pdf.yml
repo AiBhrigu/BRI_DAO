@@ -2,36 +2,34 @@ name: Build Whitepaper PDFs
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   build-pdf:
     runs-on: ubuntu-latest
+
     steps:
-      - name: 📥 Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: 🛠️ Install Pandoc and LaTeX
+      - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y pandoc texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended
+          sudo apt-get install -y pandoc texlive texlive-xetex fonts-dejavu
 
-      - name: 📄 Build English Whitepaper PDF
-        run: pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf --pdf-engine=pdflatex
-
-      - name: 📄 Build Russian Whitepaper PDF (if exists)
+      - name: Build PDFs
         run: |
-    if [ -f docs/Whitepaper_RU.md ]; then
-      pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
-    else
-      echo "RU whitepaper not found, skipping."
-    fi
+          if [ -f docs/Whitepaper_RU.md ]; then
+            pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
+          fi
+          if [ -f docs/Whitepaper_EN.md ]; then
+            pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
+          fi
 
-      - name: 📤 Upload PDFs as artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload PDF artifacts
+        uses: actions/upload-artifact@v3
         with:
           name: whitepapers
           path: |
-            docs/Whitepaper_EN.pdf
             docs/Whitepaper_RU.pdf
+            docs/Whitepaper_EN.pdf
