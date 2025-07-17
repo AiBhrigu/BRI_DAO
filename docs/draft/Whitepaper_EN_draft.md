@@ -35,7 +35,6 @@ This project is distributed under the MIT License.
 Initiator: Alisher Yulchiev  
 Email: [to-be-added]
 
-<!-- test build 2025-07-17 -->
 ---
 
 ## Notes
