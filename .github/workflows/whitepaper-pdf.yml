@@ -1,4 +1,4 @@
-name: Convert Whitepaper to PDF
+name: Build Whitepaper PDF
 
 on:
   push:
@@ -6,27 +6,33 @@ on:
       - main
 
 jobs:
-  build:
+  build-pdf:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Pandoc and LaTeX
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y pandoc texlive-xetex fonts-dejavu
+      - name: Set up Pandoc
+        run: sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended texlive-latex-extra
 
-      - name: Generate PDFs
+      - name: Generate Whitepaper PDFs
         run: |
-          pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
-          pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
+          pandoc Whitepaper_EN.md -o Whitepaper_EN.pdf
+          pandoc Whitepaper_RU.md -o Whitepaper_RU.pdf
 
-      - name: Push generated PDFs
+      - name: Copy PDFs to docs/
         run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'actions@github.com'
-          git add docs/*.pdf
-          git commit -m "Auto-generate Whitepaper PDFs" || echo "No changes to commit"
-          git push https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/AiBhrigu/BRI_DAO.git HEAD:main
+          mkdir -p docs
+          cp Whitepaper_EN.pdf docs/Whitepaper_EN.pdf
+          cp Whitepaper_RU.pdf docs/Whitepaper_RU.pdf
+
+      - name: Commit and push updated PDFs
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add docs/Whitepaper_EN.pdf docs/Whitepaper_RU.pdf
+          git commit -m "Auto-update Whitepaper PDFs" || echo "No changes to commit"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
