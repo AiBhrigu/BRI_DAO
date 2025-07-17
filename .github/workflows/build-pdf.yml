@@ -2,39 +2,37 @@ name: Build Whitepaper PDFs
 
 on:
   push:
-    branches: [main]
-    paths:
-      - 'docs/Whitepaper_*.md'
+    branches:
+      - main
 
 jobs:
   build-pdf:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: 📥 Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install pandoc
-        run: sudo apt-get update && sudo apt-get install -y pandoc
-
-      - name: Convert Markdown to PDF
+      - name: 🛠️ Install Pandoc and LaTeX
         run: |
-          cd docs
-          pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf
-          pandoc Whitepaper_RU.md -o Whitepaper_RU.pdf
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-latex-base
 
-      - name: Generate index.html
-        run: |
-          echo '<h1>BRI DAO — Белая книга</h1>' > docs/index.html
-          echo '<ul>' >> docs/index.html
-          echo '<li><a href="Whitepaper_EN.pdf">Whitepaper (EN)</a></li>' >> docs/index.html
-          echo '<li><a href="Whitepaper_RU.pdf">Whitepaper (RU)</a></li>' >> docs/index.html
-          echo '</ul>' >> docs/index.html
+      - name: 📄 Build English Whitepaper PDF
+        run: pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf --pdf-engine=pdflatex
 
-      - name: Commit and push generated files
+      - name: 📄 Build Russian Whitepaper PDF (if exists)
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add docs/Whitepaper_EN.pdf docs/Whitepaper_RU.pdf docs/index.html
-          git commit -m "Auto-generate PDFs and index.html" || echo "No changes to commit"
-          git push
+          if [ -f docs/Whitepaper_RU.md ]; then
+            pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf --pdf-engine=pdflatex
+          else
+            echo "RU whitepaper not found, skipping."
+          fi
+
+      - name: 📤 Upload PDFs as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: whitepapers
+          path: |
+            docs/Whitepaper_EN.pdf
+            docs/Whitepaper_RU.pdf
+          if-no-files-found: warn
