@@ -1,9 +1,12 @@
-name: Build Whitepaper PDF
+name: Build Whitepaper PDFs
 
 on:
   push:
     branches:
       - main
+    paths:
+      - 'docs/Whitepaper_EN.md'
+      - 'docs/Whitepaper_RU.md'
 
 jobs:
   build-pdf:
@@ -11,28 +14,21 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Pandoc
-        run: sudo apt-get install -y pandoc texlive-latex-base texlive-fonts-recommended texlive-latex-extra
+        run: sudo apt-get update && sudo apt-get install -y pandoc
 
-      - name: Generate Whitepaper PDFs
-        run: |
-          pandoc Whitepaper_EN.md -o Whitepaper_EN.pdf
-          pandoc Whitepaper_RU.md -o Whitepaper_RU.pdf
+      - name: Build English Whitepaper
+        run: pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf
 
-      - name: Copy PDFs to docs/
-        run: |
-          mkdir -p docs
-          cp Whitepaper_EN.pdf docs/Whitepaper_EN.pdf
-          cp Whitepaper_RU.pdf docs/Whitepaper_RU.pdf
+      - name: Build Russian Whitepaper
+        run: pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf
 
-      - name: Commit and push updated PDFs
+      - name: Commit PDFs
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
           git add docs/Whitepaper_EN.pdf docs/Whitepaper_RU.pdf
-          git commit -m "Auto-update Whitepaper PDFs" || echo "No changes to commit"
+          git commit -m "Auto-update Whitepapers (EN & RU) from .md" || echo "No changes to commit"
           git push
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
