@@ -20,12 +20,14 @@ jobs:
     - name: Build PDF from EN Markdown
       if: exists('docs/Whitepaper_EN.md')
       run: |
-        pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
+        pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf \
+          --pdf-engine=xelatex -V mainfont="DejaVu Serif" --number-sections
 
     - name: Build PDF from RU Markdown
       if: exists('docs/Whitepaper_RU.md')
       run: |
-        pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
+        pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf \
+          --pdf-engine=xelatex -V mainfont="DejaVu Serif" --number-sections
 
     - name: Push PDFs
       uses: stefanzweifel/git-auto-commit-action@v5
