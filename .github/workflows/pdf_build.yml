@@ -18,18 +18,18 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y pandoc texlive-xetex fonts-dejavu
 
     - name: Build PDF from EN Markdown
-      if: exists('docs/Whitepaper_EN.md')
       run: |
-        pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf \
-          --pdf-engine=xelatex -V mainfont="DejaVu Serif" --number-sections
+        if [ -f docs/Whitepaper_EN.md ]; then
+          pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
+        fi
 
     - name: Build PDF from RU Markdown
-      if: exists('docs/Whitepaper_RU.md')
       run: |
-        pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf \
-          --pdf-engine=xelatex -V mainfont="DejaVu Serif" --number-sections
+        if [ -f docs/Whitepaper_RU.md ]; then
+          pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
+        fi
 
-    - name: Push PDFs
+    - name: Commit PDFs
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: "Auto-generate Whitepaper PDFs"
