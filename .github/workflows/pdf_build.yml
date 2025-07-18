@@ -1,18 +1,18 @@
-name: Build and Deploy Whitepaper PDFs
+name: Build Whitepaper PDFs
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
     paths:
-      - 'docs/Whitepaper_*.md'
+      - 'docs/Whitepaper_EN.md'
+      - 'docs/Whitepaper_RU.md'
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
     - name: Install dependencies
       run: |
@@ -20,18 +20,21 @@ jobs:
         sudo apt-get install -y pandoc texlive-xetex fonts-dejavu
 
     - name: Build EN PDF
-      if: ${{ exists('docs/Whitepaper_EN.md') }}
-      run: pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
+      run: pandoc docs/Whitepaper_EN.md -o Whitepaper_EN.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
 
-    - name: Build RU PDF
-      if: ${{ exists('docs/Whitepaper_RU.md') }}
-      run: pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
+    - name: Build RU PDF (optional)
+      run: |
+        if [ -f docs/Whitepaper_RU.md ]; then
+          pandoc docs/Whitepaper_RU.md -o Whitepaper_RU.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
+        fi
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Move PDFs to docs for GitHub Pages
+      run: |
+        mv Whitepaper_EN.pdf docs/Whitepaper_EN.pdf
+        mv Whitepaper_RU.pdf docs/Whitepaper_RU.pdf || echo "No RU PDF to move"
+
+    - name: Auto-commit PDFs to main branch
+      uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: .
-        publish_branch: gh-pages
-        keep_files: true
-        destination_dir: docs
+        commit_message: "📄 Auto-update Whitepaper PDFs"
+        file_pattern: docs/*.pdf
