@@ -1,35 +1,35 @@
-name: Build Whitepaper PDFs
+name: Build Whitepapers
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+    paths:
+      - 'docs/Whitepaper_EN.md'
+      - 'docs/Whitepaper_RU.md'
 
 jobs:
-  build-pdf:
+  build-pdfs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y pandoc texlive texlive-xetex fonts-dejavu
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y pandoc texlive-xetex fonts-dejavu
 
-      - name: Build PDFs
-        run: |
-          if [ -f docs/Whitepaper_RU.md ]; then
-            pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
-          fi
-          if [ -f docs/Whitepaper_EN.md ]; then
-            pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
-          fi
+    - name: Build PDF from EN Markdown
+      run: |
+        pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
 
-      - name: Upload PDF artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: whitepapers
-          path: |
-            docs/Whitepaper_RU.pdf
-            docs/Whitepaper_EN.pdf
+    - name: Build PDF from RU Markdown
+      run: |
+        pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
+
+    - name: Push PDFs to docs/
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "Auto-generate Whitepaper PDFs"
+        file_pattern: docs/*.pdf
+        commit_user_name: autobot
+        commit_user_email: autobot@bhrigu.ai
+        github_token: ${{ secrets.GH_TOKEN_AUTOBOT }}
