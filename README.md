@@ -25,3 +25,8 @@
 
 Инициатор: Alisher Yulchiev  
 Email: [to-be-added]
+
+## 📄 Whitepapers
+
+- [Whitepaper (EN)](https://aibhrigu.github.io/BRI_DAO/Whitepaper_EN.pdf)
+- [Whitepaper (RU)](https://aibhrigu.github.io/BRI_DAO/Whitepaper_RU.pdf)
