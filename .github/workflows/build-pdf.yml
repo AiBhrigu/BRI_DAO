@@ -1,4 +1,4 @@
-name: Build Whitepapers
+name: Build Whitepaper PDFs
 
 on:
   push:
@@ -12,24 +12,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-    - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y pandoc texlive-xetex fonts-dejavu
+      - name: Install Pandoc and LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pandoc texlive-xetex fonts-dejavu
 
-    - name: Build PDF from EN Markdown
-      run: |
-        pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
+      - name: Generate EN PDF
+        run: |
+          pandoc docs/Whitepaper_EN.md -o docs/Whitepaper_EN.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
 
-    - name: Build PDF from RU Markdown
-      run: |
-        pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
+      - name: Generate RU PDF
+        run: |
+          pandoc docs/Whitepaper_RU.md -o docs/Whitepaper_RU.pdf --pdf-engine=xelatex -V mainfont="DejaVu Serif"
 
-    - name: Push PDFs to docs/
-      uses: stefanzweifel/git-auto-commit-action@v5
-      with:
-        commit_message: "Auto-generate Whitepaper PDFs"
-        file_pattern: docs/*.pdf
-        commit_user_name: autobot
-        commit_user_email: autobot@bhrigu.ai
-        github_token: ${{ secrets.GH_TOKEN_AUTOBOT }}
+      - name: Commit and push generated PDFs
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Auto-generate Whitepaper PDFs"
+          file_pattern: docs/*.pdf
+        env:
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_AUTOBOT }}
