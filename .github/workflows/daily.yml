@@ -1,33 +1,33 @@
-name: Daily Astrological Report
+name: 📅 Daily Astro Report
 
 on:
   schedule:
-    - cron: '0 5 * * *'  # каждый день в 5:00 UTC
+    - cron: "0 5 * * *"
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
+      - name: 🔽 Клонирование репозитория
+        uses: actions/checkout@v3
 
-      - name: Установка Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      - name: Установка зависимостей
+      - name: 🐍 Установка зависимостей
         run: |
+          python3 -m pip install --upgrade pip
           pip install skyfield
-          wget https://naif.jpl.nasa.gov/pub/naif/generic_kernels/spk/planets/de430t.bsp
 
-      - name: Генерация отчёта
+      - name: 🔮 Генерация астрологического отчёта
         run: python3 main.py
 
-      - name: Коммит и пуш отчёта
+      - name: 🕰️ Генерация архива истории
+        run: python3 utils/history_index.py
+
+      - name: 📤 Коммит и пуш изменений
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
           git add docs/history/
-          git commit -m "🚀 Daily report $(date +'%Y-%m-%d')" || echo "No changes"
-          git push
+          git commit -m "📅 Ежедневный отчёт + обновление архива" || echo "Нет изменений"
+          git push origin main

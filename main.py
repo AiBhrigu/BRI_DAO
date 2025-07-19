@@ -34,3 +34,7 @@ os.makedirs("docs/history", exist_ok=True)
 shutil.copy("docs/report.md", f"docs/history/{date_str}.md")
 
 print("✅ Markdown-отчёт сохранён в docs/history/{}.md".format(date_str))
+
+from utils.history_index import generate_index
+
+generate_index()

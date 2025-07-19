@@ -1,32 +1,29 @@
-# utils/history_index.py
-
 import os
+from pathlib import Path
 
-TEMPLATE_HEAD = """<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>История астрологических отчётов</title>
-</head>
-<body>
-    <h1>🕰️ История отчётов</h1>
-    <ul>
-"""
+HISTORY_DIR = Path("docs/history")
+INDEX_FILE = HISTORY_DIR / "index.html"
 
-TEMPLATE_FOOT = """    </ul>
-</body>
-</html>
-"""
+def generate_index():
+    files = sorted(
+        [f for f in HISTORY_DIR.glob("*.md") if f.name != "index.md"],
+        reverse=True
+    )
 
-def generate_index(history_dir="docs/history"):
-    entries = sorted([
-        f for f in os.listdir(history_dir)
-        if f.endswith(".md") and f != "index.html"
-    ])
-    
-    with open(os.path.join(history_dir, "index.html"), "w", encoding="utf-8") as f:
-        f.write(TEMPLATE_HEAD)
-        for entry in entries:
-            date = entry.replace(".md", "")
-            f.write(f'        <li><a href="{entry}">{date}</a></li>\n')
-        f.write(TEMPLATE_FOOT)
+    with open(INDEX_FILE, "w", encoding="utf-8") as f:
+        f.write("<!DOCTYPE html>\n<html>\n<head>\n")
+        f.write("<meta charset='utf-8'>\n<title>История астрологических отчётов</title>\n")
+        f.write("</head>\n<body>\n")
+        f.write("<h1>🕰️ История астрологических отчётов</h1>\n<ul>\n")
+
+        for file in files:
+            date = file.stem
+            f.write(f"<li><a href='{date}.md'>{date}</a></li>\n")
+
+        f.write("</ul>\n</body>\n</html>\n")
+
+if __name__ == "__main__":
+    generate_index()
+
+- name: 🕰️ Генерация архива истории
+  run: python3 utils/history_index.py
