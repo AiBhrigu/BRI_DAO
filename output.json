@@ -1,0 +1,139 @@
+{
+  "timestamp": "2025-07-19 05:43:44 UTC",
+  "planets": {
+    "sun": {
+      "sign": "Cancer",
+      "degree": 26.47
+    },
+    "moon": {
+      "sign": "Taurus",
+      "degree": 12.53,
+      "phase": "New Moon",
+      "illumination": 100
+    },
+    "mercury": {
+      "sign": "Leo",
+      "degree": 15.17
+    },
+    "venus": {
+      "sign": "Gemini",
+      "degree": 15.97
+    },
+    "mars": {
+      "sign": "Virgo",
+      "degree": 18.18
+    },
+    "jupiter": {
+      "sign": "Cancer",
+      "degree": 8.57
+    },
+    "saturn": {
+      "sign": "Aries",
+      "degree": 1.55
+    },
+    "uranus": {
+      "sign": "Gemini",
+      "degree": 0.13
+    },
+    "neptune": {
+      "sign": "Aries",
+      "degree": 1.76
+    },
+    "pluto": {
+      "sign": "Aquarius",
+      "degree": 2.37
+    }
+  },
+  "aspects": [
+    {
+      "planet1": "sun",
+      "planet2": "saturn",
+      "angle": 114.92,
+      "aspect": "Trine"
+    },
+    {
+      "planet1": "sun",
+      "planet2": "uranus",
+      "angle": 56.33,
+      "aspect": "Sextile"
+    },
+    {
+      "planet1": "sun",
+      "planet2": "neptune",
+      "angle": 114.71,
+      "aspect": "Trine"
+    },
+    {
+      "planet1": "sun",
+      "planet2": "pluto",
+      "angle": 174.1,
+      "aspect": "Opposition"
+    },
+    {
+      "planet1": "moon",
+      "planet2": "mercury",
+      "angle": 92.64,
+      "aspect": "Square"
+    },
+    {
+      "planet1": "moon",
+      "planet2": "mars",
+      "angle": 125.64,
+      "aspect": "Trine"
+    },
+    {
+      "planet1": "moon",
+      "planet2": "jupiter",
+      "angle": 56.03,
+      "aspect": "Sextile"
+    },
+    {
+      "planet1": "mercury",
+      "planet2": "venus",
+      "angle": 59.2,
+      "aspect": "Sextile"
+    },
+    {
+      "planet1": "venus",
+      "planet2": "mars",
+      "angle": 92.2,
+      "aspect": "Square"
+    },
+    {
+      "planet1": "saturn",
+      "planet2": "uranus",
+      "angle": 58.59,
+      "aspect": "Sextile"
+    },
+    {
+      "planet1": "saturn",
+      "planet2": "neptune",
+      "angle": 0.22,
+      "aspect": "Conjunction"
+    },
+    {
+      "planet1": "saturn",
+      "planet2": "pluto",
+      "angle": 59.17,
+      "aspect": "Sextile"
+    },
+    {
+      "planet1": "uranus",
+      "planet2": "neptune",
+      "angle": 58.37,
+      "aspect": "Sextile"
+    },
+    {
+      "planet1": "uranus",
+      "planet2": "pluto",
+      "angle": 117.76,
+      "aspect": "Trine"
+    },
+    {
+      "planet1": "neptune",
+      "planet2": "pluto",
+      "angle": 59.39,
+      "aspect": "Sextile"
+    }
+  ]
+}
